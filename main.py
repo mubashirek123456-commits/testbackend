@@ -1,9 +1,10 @@
-from fastapi import FastAPI
 import uvicorn
+from fastapi import FastAPI
 from connection import spreadsheet
 from fastapi.middleware.cors import CORSMiddleware
 from datetime import datetime
 from zoneinfo import ZoneInfo
+from env_manager import HOST
 
 IST = ZoneInfo("Asia/Kolkata")
 
@@ -11,7 +12,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],   # later restrict
+    allow_origins=[HOST],   # later restrict
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -276,7 +277,3 @@ def get_fee_logs():
         })
 
     return fee_logs
-
-# Backend Running
-if __name__ == "__main__":
-    uvicorn.run("main:app", host="127.0.0.1", port=8000)
