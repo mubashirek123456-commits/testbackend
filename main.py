@@ -252,6 +252,8 @@ def get_fee_logs():
     rows = sheet.get("A3:M")
 
     fee_logs = []
+    
+    total_received = 0
 
     for i, r in enumerate(rows):
         if not r or not r[0]:
@@ -275,5 +277,9 @@ def get_fee_logs():
             "balance": r[11],
             "due_date": due_date
         })
+        total_received += int(r[9])
 
-    return fee_logs
+    return {
+        "feelogs": fee_logs,
+        "total_received": total_received
+        }
